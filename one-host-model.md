@@ -3,16 +3,16 @@ library(deSolve)
 #SEIR Model for One Vertebrate and Vector Model 
 seir <- function(times, init, parameters) {
   
-  Sh <- init[1]
-  Eh <- init[2]
-  Ih <- init[3]
-  Rh <- init[4]
-  Nh <- Sh + Eh + Ih + Rh
+  Sh <- init[1] #susceptible hosts
+  Eh <- init[2] #exposed hosts
+  Ih <- init[3] #infected hosts
+  Rh <- init[4] #recovered hosts
+  Nh <- Sh + Eh + Ih + Rh #total population of hosts
   
-  Sv <- init [5]
-  Ev <- init [6]
-  Iv <- init [7]
-  Vv <- Sv + Ev + Iv
+  Sv <- init [5] #susceptible vector
+  Ev <- init [6] #exposed vector
+  Iv <- init [7] #infected vector
+  Vv <- Sv + Ev + Iv #total popuation of vector
   
   with(as.list(c(parameters)), {
     
