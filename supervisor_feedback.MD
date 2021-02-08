@@ -1,6 +1,6 @@
 # Tasks
 
-This file contains tasks from Shaun Keegan (SPK) to Rachael Clarke, and vice versa.<br>
+This file contains tasks from Shaun Keegan (SPK) to Rachael Clark, and vice versa.<br>
 
 When you have completed a task, edit the file and strike through my instruction ~~like this~~, using the ~. Put two before the text, and two after the text you wish to strike through. If you have any tasks for me, use the fame format that I have below and I will get on them.
 
@@ -9,9 +9,9 @@ When you have completed a task, edit the file and strike through my instruction 
 ***SPK***
 
 Single host model:
-1. Include the exponential term for your one host model in the vector equations.
-2. Test the model to ensure that you get sensible outputs now that the exponential equation has been added. Remember no negative populations, or populations that increase when there's no births, etc.. Email me if you have trouble at this stage.
-3. Move from using the beta notation to using the a, b, c notation. This is a bit less aestetically pleasing for a single host model, but will make things easier when setting parameter values for the multi host model. Again, test the model as above. 
+1. ~~Include the exponential term for your one host model in the vector equations.~~
+2. ~~Test the model to ensure that you get sensible outputs now that the exponential equation has been added.~~ Remember no negative populations, or populations that increase when there's no births, etc.. Email me if you have trouble at this stage.
+3. ~~Move from using the beta notation to using the a, b, c notation~~. This is a bit less aestetically pleasing for a single host model, but will make things easier when setting parameter values for the multi host model. Again, test the model as above. 
 
 Two host model:
 1. Create this as a new file. 
