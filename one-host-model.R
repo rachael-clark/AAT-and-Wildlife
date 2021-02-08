@@ -14,29 +14,35 @@ seir <- function(times, init, parameters) {
   Ev <- init [6] #exposed vector
   Iv <- init [7] #infected vector
   Vv <- Sv + Ev + Iv #total popuation of vector
+  #assumed that vectors remain infected for life
   
   with(as.list(c(parameters)), {
     
     #mu1 = birth rate of vertebrate
     #upsilon = rate of waning immunity
-    #beta1 = rate of transmission in vertebrate
     #lambda1 = natural death rate of vertebrate 
     #sigma1 = rate of infected to infectious in vertebrate
     #lambda2 = death rate due to infection 
     #gamma = rate of recovery 
+    #a1 = portion of tsetse bloodmeals/duration of feeding cycles in fly
+    #b1 = probability of infected fly bite giving rise to 
+    #     infection in species 1
     
-    dSh <- mu1 * Nh + upsilon * Rh - beta1 * Sh * Iv/Nh - lambda1 * Sh
-    dEh <- beta1 * Sh * Iv /Nh - sigma1 * Eh - lambda1 * Eh
+    dSh <- mu1 * Nh + upsilon * Rh - a1*b1 * Sh * Iv/Nh - lambda1 * Sh
+    dEh <- a1*b1 * Sh * Iv /Nh - sigma1 * Eh - lambda1 * Eh
     dIh <- sigma1 * Eh - lambda1 * Ih - lambda2 * Ih - gamma * Ih
     dRh <- gamma * Ih - lambda1 * Rh - upsilon * Rh
     
     #mu2 = birth rate of vector
-    #beta2 = rate of transmission in vector 
     #lambda3 = natural death rate of vector
     #sigma2 = rate of infected to infectious in vector 
+    #T= incubation period
+    #exp = probability of survival
+    #c = probability of infected bloodmeal giving rise to infection in fly
+    #a1 = portion of tsetse bloodmeals/duration of feeding cycles in fly
     
-    dSv <- mu2 * Vv - beta2 * Ih * Sv / Nh - lambda3 * Sv
-    dEv <- beta2 * Ih * Sv / Nh - sigma2 * Ev - lambda3 * Ev
+    dSv <- mu2 * Vv - exp(lambda3*T)*c*a1 * Ih * Sv / Nh - lambda3 * Sv
+    dEv <- exp(lambda3*T)*c*a1 * Ih * Sv / Nh - sigma2 * Ev - lambda3 * Ev
     dIv <- sigma2 * Ev - lambda3 * Iv
     
     
@@ -48,7 +54,7 @@ init <- c(300,0,0,0,5000,1,0)
 
 parms <- c(mu1=0.02,upsilon=0.01,beta1=0.0465,lambda1=0.02,sigma1=0.05,
            lambda2=0,gamma=0.01, mu2=0.03, beta2=0.5488, lambda3= 0.03,
-           sigma2=0.05)
+           sigma2=0.05,T=3, c= 0.025,a1=0.075, b1=0.62)
 times <- seq(0, 1000, 1)
 
 out <- as.data.frame(ode(init, times, seir, parms))
