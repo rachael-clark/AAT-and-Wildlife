@@ -14,10 +14,10 @@ Single host model:
 3. ~~Move from using the beta notation to using the a, b, c notation~~. This is a bit less aestetically pleasing for a single host model, but will make things easier when setting parameter values for the multi host model. Again, test the model as above. 
 
 Two host model:
-1. ~~Create this as a new file. ~~
-2. ~~Use notation to define the host specifically, like Sh1, Sh2, being for Susceptible (host 1) and Susceptible (host 2) respectively. ~~
-3. Very thorough when testing this model - the more you add in the more likely we are to see a small error creep up. Email me when you have this so that I can review it. 
-4. Any tasks, e.g. review model, for me to do, include them here and I'll cross them off when complete. 
+1. ~~Create this as a new file.~~
+2. ~~Use notation to define the host specifically, like Sh1, Sh2, being for Susceptible (host 1) and Susceptible (host 2) respectively.~~
+3. ~~Very thorough when testing this model - the more you add in the more likely we are to see a small error creep up. Email me when you have this so that I can review it.~~
+4. ~~Any tasks, e.g. review model, for me to do, include them here and I'll cross them off when complete.~~
 
 **08-FEB-2021** - 
 ***FOA SPK***
