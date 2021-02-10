@@ -72,13 +72,39 @@ seir <- function(times, init, parameters) {
   })
 }
 
-init <- c(300,0,0,0,5000,1,0,300,0,0,0)
+init <- c(300,0,0,0,5000,0,1,300,0,0,0)
 
-parms <- c(mu1=0,upsilon1=0.01,lambda1=0,sigma1=0.05,
-           lambda2=0,gamma1=0.01, mu2=0, lambda3= 0,
-           sigma2=0.05,T=3, c= 0.025,a1=0.075, b1=0.62, mu3= 0,lambda4=0,
-           sigma3=0.05,upsilon2=0.01,lambda5=0, gamma2=0.01, a2=0.075, 
-           b2=0.62)
+# SPK: Have reorganised this to be more aestetically pleasing and easy to read. 
+#      You should go through and add labels to each as you have elsewhere for 
+#      clarity.
+
+parms <- c(
+           # host 1
+           mu1=0,
+           lambda1=0,
+           sigma1=0.05,
+           lambda2=0,
+           gamma1=0.01,
+           a1=0.075,
+           b1=0.62,
+           upsilon1=0.01,
+           
+           # host 2
+           mu3= 0,
+           lambda4=0,
+           sigma3=0.05,
+           upsilon2=0.01,
+           lambda5=0, 
+           gamma2=0.01, 
+           a2=0.075, 
+           b2=0.62,
+           
+           # vector
+           mu2=0, 
+           lambda3= 0,
+           sigma2=0.05,
+           T=3, 
+           c= 0.025)
 times <- seq(0, 1000, 1)
 
 out <- as.data.frame(ode(init, times, seir, parms))
@@ -86,17 +112,41 @@ out <- as.data.frame(ode(init, times, seir, parms))
 head(out)
 tail(out)
 min(out)
-out
+
+
+par(mfrow=c(1,3)) # To include 3 plots on the one row
+
+# SPK: Have added a third plot to show the second host species. Have also tweaked
+#      the colours slightly to be consistent and I think clear what is what for 
+#      now:
+#          - Susceptible: Dark Green
+#          - Exposed: Orange
+#          - Infected: Red
+#          - Recovered: Blue
+#      Have also added some plotting features to make the lines more clear. This
+#      is the "lwd =" command within the plot and line brackets. 
+#      
+
+# Host 1
 plot(out$`1` ~out$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,300))
-lines(out$`2`~out$time, col='red')
-lines(out$`3`~out$time, col= 'blue')
-lines(out$'4'~out$time, col='pink')
-lines(out$'5'~out$time, col='orange')
-lines(out$'6'~out$time, col='brown')
-lines(out$'7'~out$time, col='black')
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+lines(out$`2`~out$time, col='orange', lwd = 2)
+lines(out$`3`~out$time, col= 'red', lwd = 2)
+lines(out$'4'~out$time, col='blue', lwd = 2)
+
+# Host 2
+plot(out$`8` ~out$time, type='l', col='darkgreen', 
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+lines(out$`9`~out$time, col='orange', lwd = 2)
+lines(out$`10`~out$time, col= 'red', lwd = 2)
+lines(out$'11'~out$time, col='blue', lwd = 2)
+
+# Vector
+plot(out$`5` ~out$time, type='l', col='darkgreen', 
+     xlab= 'time', ylab='N', ylim = c(0,5000), lwd = 2)
+lines(out$'6'~out$time, col='orange', lwd = 2)
+lines(out$'7'~out$time, col='red', lwd = 2)
 
 
 min(out)
 max(out)
-par(mfrow=c(1,2))  
