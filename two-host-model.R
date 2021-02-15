@@ -72,39 +72,51 @@ seir <- function(times, init, parameters) {
   })
 }
 
-init <- c(300,0,0,0,5000,0,1,300,0,0,0)
+init <- c(Sus1 = 300,    #susceptible host 1
+          Exp1 = 0,      #exposed host 1
+          Inf1 = 0,      #infected host 1
+          Rec1 = 0,      #recovered host 1
+          SusV=5000,     #susceptible tsetse vector
+          ExpV=0,        #exposed tsetse vector 
+          InfV=1,        #infected tsetse vector
+          Sus2=300,      #susceptible host 2
+          Exp2=0,        #exposed host 2
+          Inf2=0,        #infected host 2
+          Rec2=0)        #recovered host 2.
 
 # SPK: Have reorganised this to be more aestetically pleasing and easy to read. 
 #      You should go through and add labels to each as you have elsewhere for 
 #      clarity.
 
 parms <- c(
-           # host 1
-           mu1=0,
-           lambda1=0,
-           sigma1=0.05,
-           lambda2=0,
-           gamma1=0.01,
-           a1=0.075,
-           b1=0.62,
-           upsilon1=0.01,
-           
-           # host 2
-           mu3= 0,
-           lambda4=0,
-           sigma3=0.05,
-           upsilon2=0.01,
-           lambda5=0, 
-           gamma2=0.01, 
-           a2=0.075, 
-           b2=0.62,
-           
-           # vector
-           mu2=0, 
-           lambda3= 0,
-           sigma2=0.05,
-           T=3, 
-           c= 0.025)
+  # host 1
+  mu1=0,        #birth rate of host 1
+  lambda1=0,    #natural death rate of host 1
+  sigma1=0.05,  #rate of infected to infectious in host 1
+  lambda2=0,    #death due to infection in host 1
+  gamma1=0.01,  #recovery rate of host 1
+  a1=0.075,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  #for host 1
+  b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
+  upsilon1=0.01,#rate of waning immunity in host 1
+  
+  # host 2
+  mu3= 0,        #birth rate of host 2
+  lambda4=0,     #natural death rate of host 2
+  sigma3=0.05,   #rate of infected to infectious in host 2
+  upsilon2=0.01, #rate of waning immunity in host 2
+  lambda5=0,     #death dye to infection in host 2
+  gamma2=0.01,   #recovery rate in host 2
+  a2=0.075,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  #for host 2
+  b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
+  
+  # vector
+  mu2=     0.01,         #birth rate of vector
+  lambda3= 0.01,    #natural death rate of vector
+  sigma2=0.05,   #rate of infected to infectious in vector 
+  T=3,           #incubation period
+  c= 0.025)      #probability of infected bloodmeal giving rise to infection in fly
 times <- seq(0, 1000, 1)
 
 out <- as.data.frame(ode(init, times, seir, parms))
@@ -128,25 +140,42 @@ par(mfrow=c(1,3)) # To include 3 plots on the one row
 #      
 
 # Host 1
-plot(out$`1` ~out$time, type='l', col='darkgreen', 
+plot(out$Sus1 ~ out$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$`2`~out$time, col='orange', lwd = 2)
-lines(out$`3`~out$time, col= 'red', lwd = 2)
-lines(out$'4'~out$time, col='blue', lwd = 2)
+lines(out$Exp1 ~ out$time, col='orange', lwd = 2)
+lines(out$Inf1 ~ out$time, col= 'red', lwd = 2)
+lines(out$Rec1 ~ out$time, col='blue', lwd = 2)
+legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
+       col=c("darkgreen", "orange","red","blue"), lty=1, cex=0.8)
+
+
+# plot(out$`1` ~out$time, type='l', col='darkgreen', 
+#      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+# lines(out$`2`~out$time, col='orange', lwd = 2)
+# lines(out$`3`~out$time, col= 'red', lwd = 2)
+# lines(out$'4'~out$time, col='blue', lwd = 2)
 
 # Host 2
-plot(out$`8` ~out$time, type='l', col='darkgreen', 
+plot(out$`Sus2` ~out$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$`9`~out$time, col='orange', lwd = 2)
-lines(out$`10`~out$time, col= 'red', lwd = 2)
-lines(out$'11'~out$time, col='blue', lwd = 2)
+lines(out$`Exp2`~out$time, col='orange', lwd = 2)
+lines(out$`Inf2`~out$time, col= 'red', lwd = 2)
+lines(out$'Rec2'~out$time, col='blue', lwd = 2)
+legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
+       col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 
 # Vector
-plot(out$`5` ~out$time, type='l', col='darkgreen', 
+plot(out$`SusV` ~out$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,5000), lwd = 2)
-lines(out$'6'~out$time, col='orange', lwd = 2)
-lines(out$'7'~out$time, col='red', lwd = 2)
-
+lines(out$'ExpV'~out$time, col='orange', lwd = 2)
+lines(out$'InfV'~out$time, col='red', lwd = 2)
+legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
+       col=c("darkgreen", "orange","red"), lty=1, cex=0.8)
 
 min(out)
-max(out)
+max(out)  
+
+out$Total1 <- out$Sus1 + out$Exp1 + out$Inf1 + out$Rec1
+out$Total2 <- out$Sus2 + out$Exp2 + out$Inf2 + out$Rec2
+out$TotalV <- out$SusV + out$ExpV + out$InfV
+View(out)
