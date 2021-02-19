@@ -142,32 +142,32 @@ init <- c(Sus1 = 300,    #susceptible host 1
 #      clarity.
 
 parms <- c(
-  # host 1
+  # host 1 = cattle
   mu1=0,        #birth rate of host 1
   lambda1=0,    #natural death rate of host 1
   sigma1=0.05,  #rate of infected to infectious in host 1
   lambda2=0,    #death due to infection in host 1
   gamma1=0.01,  #recovery rate of host 1
-  a1=0.075,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a1=0.0875,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
   b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
   
-  # host 2
+  # host 2 = buffalo
   mu3= 0,        #birth rate of host 2
   lambda4=0,     #natural death rate of host 2
   sigma3=0.05,   #rate of infected to infectious in host 2
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.01,   #recovery rate in host 2
-  a2=0.075,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=0.07125,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 2
   b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
   
-  # host 3
+  # host 3 = giraffe
   mu4 = 0,       #birth rate of host 3
   upsilon3= 0.01,#rate of waning immunity in host 3
-  a3= 0.075,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a3= 0.025,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 3
   b3=0.62,       #probability of infected fly bite giving rise to infection in host 3
   lambda6=0,     #natural death rate of host 3
@@ -175,10 +175,10 @@ parms <- c(
   lambda7=0,     #death rate due to infection in host 3
   gamma3= 0.01,  #recovery rate in host 3
   
-  # host 4
+  # host 4 = elephant
   mu5=0,         #birth rate of host 4
   upsilon4= 0.01,#rate of waning immunity in host 4
-  a4= 0.075,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a4= 0.01375,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 4
   b4=0.62,       #probability of infected fly bite giving rise to infection in host 4
   lambda8=0,     #natural death rate of host 4
@@ -186,7 +186,7 @@ parms <- c(
   lambda9=0,     #death rate due to infection in host 4
   gamma4=0.01,   #recovery rate in host 4 
   
-  # vector
+  # vector = tsetse G. pallidipes
   mu2=     0.01,         #birth rate of vector
   lambda3= 0.01,    #natural death rate of vector
   sigma2=0.05,   #rate of infected to infectious in vector 
