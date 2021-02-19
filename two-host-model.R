@@ -89,25 +89,25 @@ init <- c(Sus1 = 300,    #susceptible host 1
 #      clarity.
 
 parms <- c(
-  # host 1
+  # host 1 = cattle
   mu1=0,        #birth rate of host 1
   lambda1=0,    #natural death rate of host 1
   sigma1=0.05,  #rate of infected to infectious in host 1
   lambda2=0,    #death due to infection in host 1
   gamma1=0.01,  #recovery rate of host 1
-  a1=0.075,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a1=0.0875,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
   b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
   
-  # host 2
+  # host 2 = wildlife
   mu3= 0,        #birth rate of host 2
   lambda4=0,     #natural death rate of host 2
   sigma3=0.05,   #rate of infected to infectious in host 2
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.01,   #recovery rate in host 2
-  a2=0.075,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=0.01566,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 2
   b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
   
