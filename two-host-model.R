@@ -88,6 +88,39 @@ init <- c(Sus1 = 300,    #susceptible host 1
 #      You should go through and add labels to each as you have elsewhere for 
 #      clarity.
 
+#To calculate the proportion of bloodmeals from different wildlife host,
+#takem from Auty et al, 2016, the three main hosts of tsetse bloodmeals
+#are buffalo (57%), giraffe (20%) and elephant (11%)
+#At the park boundary we assume that 50% of bloodmeals will be from
+#wildlife and 50% from livestock and humans
+
+wildlife.prop <- 0.5
+buf <- 0.57
+gir <- 0.2
+ele <- 0.11
+
+buf.adj <- buf / (buf + gir + ele) * wildlife.prop
+gir.adj <- gir/(buf + gir + ele) * wildlife.prop
+ele.adj <- ele/(buf + gir + ele) * wildlife.prop
+
+ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
+
+domestic.prop <- 0.5
+hum <- 0.3
+cat <- 0.7
+
+hum.adj <- hum / (hum + cat) * domestic.prop
+cat.adj <- cat / (hum +cat) * domestic.prop
+
+ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
+
+#weighted averages of the three main wildlife species
+wildlife.av <- ((buf.adj*buf)+(gir.adj*gir)+(ele.adj*ele))/3
+
+#To calculate values for 'a' in the parameters, the above values
+#are divided by duration of feeding cycles in tsetse = d
+d <- 4
+
 parms <- c(
   # host 1 = cattle
   mu1=0,        #birth rate of host 1
@@ -95,7 +128,7 @@ parms <- c(
   sigma1=0.05,  #rate of infected to infectious in host 1
   lambda2=0,    #death due to infection in host 1
   gamma1=0.01,  #recovery rate of host 1
-  a1=0.0875,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a1=cat.adj/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
   b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
@@ -107,7 +140,7 @@ parms <- c(
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.01,   #recovery rate in host 2
-  a2=0.01566,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=wildlife.av/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 2
   b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
   
