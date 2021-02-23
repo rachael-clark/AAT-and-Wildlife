@@ -117,22 +117,22 @@ seir <- function(times, init, parameters) {
   })
 }
 
-init <- c(Sus1 = 40251,    #susceptible host 1
+init <- c(Sus1 = 300,    #susceptible host 1
           Exp1 = 0,      #exposed host 1
           Inf1 = 0,      #infected host 1
           Rec1 = 0,      #recovered host 1
-          SusV=4000,     #susceptible tsetse vector
+          SusV=5000,     #susceptible tsetse vector
           ExpV=0,        #exposed tsetse vector 
-          InfV=1000,        #infected tsetse vector
-          Sus2=61396,      #susceptible host 2
+          InfV=1,        #infected tsetse vector
+          Sus2=300,      #susceptible host 2
           Exp2=0,        #exposed host 2
           Inf2=0,        #infected host 2
           Rec2=0,        #recovered host 2.
-          Sus3=5886,      #susceptible host 3
+          Sus3=300,      #susceptible host 3
           Exp3=0,        #exposed host 3
           Inf3=0,        #infected host 3
           Rec3=0,        #recovered host 3
-          Sus4=7535,        #susceptible host 4
+          Sus4=300,        #susceptible host 4
           Exp4=0,        #exposed host 4
           Inf4=0,        #infected host 4
           Rec4=0)        #recovered host 4
@@ -141,6 +141,36 @@ init <- c(Sus1 = 40251,    #susceptible host 1
 #      You should go through and add labels to each as you have elsewhere for 
 #      clarity.
 
+#To calculate the proportion of bloodmeals from different wildlife host,
+#takem from Auty et al, 2016, the three main hosts of tsetse bloodmeals
+#are buffalo (57%), giraffe (20%) and elephant (11%)
+#At the park boundary we assume that 50% of bloodmeals will be from
+#wildlife and 50% from livestock and humans
+
+wildlife.prop <- 0.5
+buf <- 0.57
+gir <- 0.2
+ele <- 0.11
+
+buf.adj <- buf / (buf + gir + ele) * wildlife.prop
+gir.adj <- gir/(buf + gir + ele) * wildlife.prop
+ele.adj <- ele/(buf + gir + ele) * wildlife.prop
+
+ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
+
+domestic.prop <- 0.5
+hum <- 0.3
+cat <- 0.7
+
+hum.adj <- hum / (hum + cat) * domestic.prop
+cat.adj <- cat / (hum +cat) * domestic.prop
+
+ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
+
+#To calculate values for 'a' in the parameters, the above values
+#are divided by duration of feeding cycles in tsetse = d
+d <- 4
+
 parms <- c(
   # host 1 = cattle
   mu1=0,        #birth rate of host 1
@@ -148,7 +178,7 @@ parms <- c(
   sigma1=0.067,  #rate of infected to infectious in host 1
   lambda2=0,    #death due to infection in host 1
   gamma1=0.01,  #recovery rate of host 1
-  a1=0.0875,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a1=cat.adj/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
   b1=0.46,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
@@ -160,14 +190,14 @@ parms <- c(
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.0042,   #recovery rate in host 2
-  a2=0.07125,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=buf.adj/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 2
   b2=0.46,       #probability of infected fly bite giving rise to infection in host 2
   
   # host 3 = giraffe
   mu4 = 0,       #birth rate of host 3
   upsilon3= 0.01,#rate of waning immunity in host 3
-  a3= 0.025,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a3= gir.adj/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 3
   b3=0.46,       #probability of infected fly bite giving rise to infection in host 3
   lambda6=0,     #natural death rate of host 3
@@ -178,7 +208,7 @@ parms <- c(
   # host 4 = elephant
   mu5=0,         #birth rate of host 4
   upsilon4= 0.01,#rate of waning immunity in host 4
-  a4= 0.01375,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a4= ele.adj/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 4
   b4=0.46,       #probability of infected fly bite giving rise to infection in host 4
   lambda8=0,     #natural death rate of host 4
@@ -216,7 +246,7 @@ par(mfrow=c(2,3)) # To include 3 plots on the one row
 
 # Host 1
 plot(out$Sus1 ~ out$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,50000), lwd = 2)
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
 lines(out$Exp1 ~ out$time, col='orange', lwd = 2)
 lines(out$Inf1 ~ out$time, col= 'red', lwd = 2)
 lines(out$Rec1 ~ out$time, col='blue', lwd = 2)
@@ -232,7 +262,7 @@ legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
 
 # Host 2
 plot(out$`Sus2` ~out$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,62000), lwd = 2)
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
 lines(out$`Exp2`~out$time, col='orange', lwd = 2)
 lines(out$`Inf2`~out$time, col= 'red', lwd = 2)
 lines(out$'Rec2'~out$time, col='blue', lwd = 2)
@@ -240,7 +270,7 @@ legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 3
 plot(out$`Sus3` ~out$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,6000), lwd = 2)
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
 lines(out$`Exp3`~out$time, col='orange', lwd = 2)
 lines(out$`Inf3`~out$time, col= 'red', lwd = 2)
 lines(out$'Rec3'~out$time, col='blue', lwd = 2)
@@ -248,7 +278,7 @@ legend(500, 300, legend=c("Sus3", "Exp3", "Inf3", "Rec3"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 4
 plot(out$`Sus4` ~out$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,8000), lwd = 2)
+     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
 lines(out$`Exp4`~out$time, col='orange', lwd = 2)
 lines(out$`Inf4`~out$time, col= 'red', lwd = 2)
 lines(out$'Rec4'~out$time, col='blue', lwd = 2)
