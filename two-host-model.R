@@ -105,7 +105,7 @@ ele.adj <- ele/(buf + gir + ele) * wildlife.prop
 
 ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
 
-domestic.prop <- 0.5
+domestic.prop <- 1 - wildlife.prop
 hum <- 0.3
 cat <- 0.7
 
