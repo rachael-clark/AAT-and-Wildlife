@@ -158,7 +158,7 @@ ele.adj <- ele/(buf + gir + ele) * wildlife.prop
 
 ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
 
-domestic.prop <- 0.5
+domestic.prop <- 1-wildlife.prop
 hum <- 0.3
 cat <- 0.7
 
@@ -231,7 +231,7 @@ tail(out)
 min(out)
 
 
-par(mfrow=c(2,3)) # To include 3 plots on the one row
+par(mfrow=c(1,3)) # To include 3 plots on the one row
 
 # SPK: Have added a third plot to show the second host species. Have also tweaked
 #      the colours slightly to be consistent and I think clear what is what for 
