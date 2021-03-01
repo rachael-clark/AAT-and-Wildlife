@@ -245,7 +245,7 @@ par(mfrow=c(2,3)) # To include 3 plots on the one row
 #      
 
 # Host 1
-plot(out$Sus1 ~ out4$time, type='l', col='darkgreen', 
+plot(out4$Sus1 ~ out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
 lines(out4$Exp1 ~ out4$time, col='orange', lwd = 2)
 lines(out4$Inf1 ~ out4$time, col= 'red', lwd = 2)
