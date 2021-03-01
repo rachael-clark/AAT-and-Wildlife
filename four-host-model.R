@@ -2,7 +2,7 @@
 library(deSolve)
 
 #SEIR Model for Two Vertebrate Hosts and One Vector Model 
-seir <- function(times, init, parameters) {
+seir4 <- function(times, init, parameters) {
   
   Sh1 <- init[1]               #susceptible host species 1
   Eh1 <- init[2]               #exposed host species 1
@@ -117,7 +117,7 @@ seir <- function(times, init, parameters) {
   })
 }
 
-init <- c(Sus1 = 300,    #susceptible host 1
+init4 <- c(Sus1 = 300,    #susceptible host 1
           Exp1 = 0,      #exposed host 1
           Inf1 = 0,      #infected host 1
           Rec1 = 0,      #recovered host 1
@@ -171,7 +171,7 @@ ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
 #are divided by duration of feeding cycles in tsetse = d
 d <- 4
 
-parms <- c(
+parms4 <- c(
   # host 1 = cattle
   mu1=0,        #birth rate of host 1
   lambda1=0,    #natural death rate of host 1
@@ -222,16 +222,16 @@ parms <- c(
   sigma2=0.05,   #rate of infected to infectious in vector 
   T=3,           #incubation period
   c= 0.025)      #probability of infected bloodmeal giving rise to infection in fly
-times <- seq(0, 1000, 1)
+times4 <- seq(0, 1000, 1)
 
-out <- as.data.frame(ode(init, times, seir, parms))
+out4 <- as.data.frame(ode(init, times, seir, parms))
 
-head(out)
-tail(out)
-min(out)
+head(out4)
+tail(out4)
+min(out4)
 
 
-par(mfrow=c(1,3)) # To include 3 plots on the one row
+par(mfrow=c(2,3)) # To include 3 plots on the one row
 
 # SPK: Have added a third plot to show the second host species. Have also tweaked
 #      the colours slightly to be consistent and I think clear what is what for 
@@ -245,11 +245,11 @@ par(mfrow=c(1,3)) # To include 3 plots on the one row
 #      
 
 # Host 1
-plot(out$Sus1 ~ out$time, type='l', col='darkgreen', 
+plot(out$Sus1 ~ out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$Exp1 ~ out$time, col='orange', lwd = 2)
-lines(out$Inf1 ~ out$time, col= 'red', lwd = 2)
-lines(out$Rec1 ~ out$time, col='blue', lwd = 2)
+lines(out4$Exp1 ~ out4$time, col='orange', lwd = 2)
+lines(out4$Inf1 ~ out4$time, col= 'red', lwd = 2)
+lines(out4$Rec1 ~ out4$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
        col=c("darkgreen", "orange","red","blue"), lty=1, cex=0.8)
 
@@ -261,44 +261,44 @@ legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
 # lines(out$'4'~out$time, col='blue', lwd = 2)
 
 # Host 2
-plot(out$`Sus2` ~out$time, type='l', col='darkgreen', 
+plot(out4$`Sus2` ~out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$`Exp2`~out$time, col='orange', lwd = 2)
-lines(out$`Inf2`~out$time, col= 'red', lwd = 2)
-lines(out$'Rec2'~out$time, col='blue', lwd = 2)
+lines(out4$`Exp2`~out4$time, col='orange', lwd = 2)
+lines(out4$`Inf2`~out4$time, col= 'red', lwd = 2)
+lines(out4$'Rec2'~out4$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 3
-plot(out$`Sus3` ~out$time, type='l', col='darkgreen', 
+plot(out4$`Sus3` ~out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$`Exp3`~out$time, col='orange', lwd = 2)
-lines(out$`Inf3`~out$time, col= 'red', lwd = 2)
-lines(out$'Rec3'~out$time, col='blue', lwd = 2)
+lines(out4$`Exp3`~out4$time, col='orange', lwd = 2)
+lines(out4$`Inf3`~out4$time, col= 'red', lwd = 2)
+lines(out4$'Rec3'~out4$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus3", "Exp3", "Inf3", "Rec3"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 4
-plot(out$`Sus4` ~out$time, type='l', col='darkgreen', 
+plot(out4$`Sus4` ~out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out$`Exp4`~out$time, col='orange', lwd = 2)
-lines(out$`Inf4`~out$time, col= 'red', lwd = 2)
-lines(out$'Rec4'~out$time, col='blue', lwd = 2)
+lines(out4$`Exp4`~out4$time, col='orange', lwd = 2)
+lines(out4$`Inf4`~out4$time, col= 'red', lwd = 2)
+lines(out4$'Rec4'~out4$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus4", "Exp4", "Inf4", "Rec4"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 
 # Vector
-plot(out$`SusV` ~out$time, type='l', col='darkgreen', 
+plot(out4$`SusV` ~out4$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,5000), lwd = 2)
-lines(out$'ExpV'~out$time, col='orange', lwd = 2)
-lines(out$'InfV'~out$time, col='red', lwd = 2)
+lines(out4$'ExpV'~out4$time, col='orange', lwd = 2)
+lines(out4$'InfV'~out4$time, col='red', lwd = 2)
 legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
        col=c("darkgreen", "orange","red"), lty=1, cex=0.8)
 
-min(out)
-max(out)  
+min(out4)
+max(out4)  
 
-out$Total1 <- out$Sus1 + out$Exp1 + out$Inf1 + out$Rec1
-out$Total2 <- out$Sus2 + out$Exp2 + out$Inf2 + out$Rec2
-out$Total3 <- out$Sus3 + out$Exp3 + out$Inf3 + out$Rec3
-out$Total4 <- out$Sus4 + out$Exp4 + out$Inf4 + out$Rec4
-out$TotalV <- out$SusV + out$ExpV + out$InfV
-View(out)
+out4$Total1 <- out$Sus1 + out$Exp1 + out$Inf1 + out$Rec1
+out4$Total2 <- out$Sus2 + out$Exp2 + out$Inf2 + out$Rec2
+out4$Total3 <- out$Sus3 + out$Exp3 + out$Inf3 + out$Rec3
+out4$Total4 <- out$Sus4 + out$Exp4 + out$Inf4 + out$Rec4
+out4$TotalV <- out$SusV + out$ExpV + out$InfV
+View(out4)
