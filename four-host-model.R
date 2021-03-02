@@ -2,7 +2,7 @@
 library(deSolve)
 
 #SEIR Model for Two Vertebrate Hosts and One Vector Model 
-seir4 <- function(times, init, parameters) {
+seir4.gpall <- function(times, init, parameters) {
   
   Sh1 <- init[1]               #susceptible host species 1
   Eh1 <- init[2]               #exposed host species 1
@@ -117,7 +117,7 @@ seir4 <- function(times, init, parameters) {
   })
 }
 
-init4 <- c(Sus1 = 300,    #susceptible host 1
+init4.gpall <- c(Sus1 = 300,    #susceptible host 1
           Exp1 = 0,      #exposed host 1
           Inf1 = 0,      #infected host 1
           Rec1 = 0,      #recovered host 1
@@ -148,37 +148,37 @@ init4 <- c(Sus1 = 300,    #susceptible host 1
 #wildlife and 50% from livestock and humans
 
 wildlife.prop <- 0.5
-buf <- 0.57
-gir <- 0.2
-ele <- 0.11
+buf.gpall <- 0.57
+gir.gpall <- 0.2
+ele.gpall <- 0.11
 
-buf.adj <- buf / (buf + gir + ele) * wildlife.prop
-gir.adj <- gir/(buf + gir + ele) * wildlife.prop
-ele.adj <- ele/(buf + gir + ele) * wildlife.prop
+buf.adj.gpall <- buf.gpall / (buf.gpall + gir.gpall + ele.gpall) * wildlife.prop
+gir.adj.gpall <- gir.gpall/(buf.gpall + gir.gpall + ele.gpall) * wildlife.prop
+ele.adj.gpall <- ele.gpall/(buf.gpall + gir.gpall + ele.gpall) * wildlife.prop
 
-ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
+ifelse(buf.adj.gpall + gir.adj.gpall + ele.adj.gpall == wildlife.prop, "TRUE", "FALSE")
 
 domestic.prop <- 1-wildlife.prop
-hum <- 0.3
-cat <- 0.7
+hum.gpall <- 0.3
+cat.gpall <- 0.7
 
-hum.adj <- hum / (hum + cat) * domestic.prop
-cat.adj <- cat / (hum +cat) * domestic.prop
+hum.adj.gpall <- hum.gpall / (hum.gpall + cat.gpall) * domestic.prop
+cat.adj.gpall <- cat.gpall / (hum.gpall +cat.gpall) * domestic.prop
 
-ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
+ifelse(hum.adj.gpall + cat.adj.gpall == domestic.prop,"TRUE", "FALSE")
 
 #To calculate values for 'a' in the parameters, the above values
 #are divided by duration of feeding cycles in tsetse = d
 d <- 4
 
-parms4 <- c(
+parms4.gpall <- c(
   # host 1 = cattle
   mu1=0,        #birth rate of host 1
   lambda1=0,    #natural death rate of host 1
   sigma1=0.067,  #rate of infected to infectious in host 1
   lambda2=0,    #death due to infection in host 1
   gamma1=0.01,  #recovery rate of host 1
-  a1=cat.adj/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a1=cat.adj.gpall/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
   b1=0.46,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
@@ -190,14 +190,14 @@ parms4 <- c(
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.0042,   #recovery rate in host 2
-  a2=buf.adj/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=buf.adj.gpall/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 2
   b2=0.46,       #probability of infected fly bite giving rise to infection in host 2
   
   # host 3 = giraffe
   mu4 = 0,       #birth rate of host 3
   upsilon3= 0.01,#rate of waning immunity in host 3
-  a3= gir.adj/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a3= gir.adj.gpall/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 3
   b3=0.46,       #probability of infected fly bite giving rise to infection in host 3
   lambda6=0,     #natural death rate of host 3
@@ -208,7 +208,7 @@ parms4 <- c(
   # host 4 = elephant
   mu5=0,         #birth rate of host 4
   upsilon4= 0.01,#rate of waning immunity in host 4
-  a4= ele.adj/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
+  a4= ele.adj.gpall/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 4
   b4=0.46,       #probability of infected fly bite giving rise to infection in host 4
   lambda8=0,     #natural death rate of host 4
@@ -224,11 +224,11 @@ parms4 <- c(
   c= 0.025)      #probability of infected bloodmeal giving rise to infection in fly
 times4 <- seq(0, 1000, 1)
 
-out4 <- as.data.frame(ode(init, times, seir, parms))
+out4.gpall <- as.data.frame(ode(init4.gpall, times4, seir4.gpall, parms4.gpall))
 
-head(out4)
-tail(out4)
-min(out4)
+head(out4.gpall)
+tail(out4.gpall)
+min(out4.gpall)
 
 
 par(mfrow=c(2,3)) # To include 3 plots on the one row
@@ -245,11 +245,11 @@ par(mfrow=c(2,3)) # To include 3 plots on the one row
 #      
 
 # Host 1
-plot(out4$Sus1 ~ out4$time, type='l', col='darkgreen', 
+plot(out4.gpall$Sus1 ~ out4.gpall$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out4$Exp1 ~ out4$time, col='orange', lwd = 2)
-lines(out4$Inf1 ~ out4$time, col= 'red', lwd = 2)
-lines(out4$Rec1 ~ out4$time, col='blue', lwd = 2)
+lines(out4.gpall$Exp1 ~ out4.gpall$time, col='orange', lwd = 2)
+lines(out4.gpall$Inf1 ~ out4.gpall$time, col= 'red', lwd = 2)
+lines(out4.gpall$Rec1 ~ out4.gpall$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
        col=c("darkgreen", "orange","red","blue"), lty=1, cex=0.8)
 
@@ -261,44 +261,44 @@ legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
 # lines(out$'4'~out$time, col='blue', lwd = 2)
 
 # Host 2
-plot(out4$`Sus2` ~out4$time, type='l', col='darkgreen', 
+plot(out4.gpall$`Sus2` ~out4.gpall$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out4$`Exp2`~out4$time, col='orange', lwd = 2)
-lines(out4$`Inf2`~out4$time, col= 'red', lwd = 2)
-lines(out4$'Rec2'~out4$time, col='blue', lwd = 2)
+lines(out4.gpall$`Exp2`~out4.gpall$time, col='orange', lwd = 2)
+lines(out4.gpall$`Inf2`~out4.gpall$time, col= 'red', lwd = 2)
+lines(out4.gpall$'Rec2'~out4.gpall$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 3
-plot(out4$`Sus3` ~out4$time, type='l', col='darkgreen', 
+plot(out4.gpall$`Sus3` ~out4.gpall$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out4$`Exp3`~out4$time, col='orange', lwd = 2)
-lines(out4$`Inf3`~out4$time, col= 'red', lwd = 2)
-lines(out4$'Rec3'~out4$time, col='blue', lwd = 2)
+lines(out4.gpall$`Exp3`~out4.gpall$time, col='orange', lwd = 2)
+lines(out4.gpall$`Inf3`~out4.gpall$time, col= 'red', lwd = 2)
+lines(out4.gpall$'Rec3'~out4.gpall$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus3", "Exp3", "Inf3", "Rec3"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 4
-plot(out4$`Sus4` ~out4$time, type='l', col='darkgreen', 
+plot(out4.gpall$`Sus4` ~out4.gpall$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-lines(out4$`Exp4`~out4$time, col='orange', lwd = 2)
-lines(out4$`Inf4`~out4$time, col= 'red', lwd = 2)
-lines(out4$'Rec4'~out4$time, col='blue', lwd = 2)
+lines(out4.gpall$`Exp4`~out4.gpall$time, col='orange', lwd = 2)
+lines(out4.gpall$`Inf4`~out4.gpall$time, col= 'red', lwd = 2)
+lines(out4.gpall$'Rec4'~out4.gpall$time, col='blue', lwd = 2)
 legend(500, 300, legend=c("Sus4", "Exp4", "Inf4", "Rec4"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 
 # Vector
-plot(out4$`SusV` ~out4$time, type='l', col='darkgreen', 
+plot(out4.gpall$`SusV` ~out4.gpall$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,5000), lwd = 2)
-lines(out4$'ExpV'~out4$time, col='orange', lwd = 2)
-lines(out4$'InfV'~out4$time, col='red', lwd = 2)
+lines(out4.gpall$'ExpV'~out4.gpall$time, col='orange', lwd = 2)
+lines(out4.gpall$'InfV'~out4$time, col='red', lwd = 2)
 legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
        col=c("darkgreen", "orange","red"), lty=1, cex=0.8)
 
-min(out4)
-max(out4)  
+min(out4.gpall)
+max(out4.gpall)  
 
-out4$Total1 <- out$Sus1 + out$Exp1 + out$Inf1 + out$Rec1
-out4$Total2 <- out$Sus2 + out$Exp2 + out$Inf2 + out$Rec2
-out4$Total3 <- out$Sus3 + out$Exp3 + out$Inf3 + out$Rec3
-out4$Total4 <- out$Sus4 + out$Exp4 + out$Inf4 + out$Rec4
-out4$TotalV <- out$SusV + out$ExpV + out$InfV
-View(out4)
+out4.gpall$Total1 <- out4.gpall$Sus1 + out4.gpall$Exp1 + out4.gpall$Inf1 + out4.gpall$Rec1
+out4.gpall$Total2 <- out4.gpall$Sus2 + out4.gpall$Exp2 + out4.gpall$Inf2 + out4.gpall$Rec2
+out4.gpall$Total3 <- out4.gpall$Sus3 + out4.gpall$Exp3 + out4.gpall$Inf3 + out4.gpall$Rec3
+out4.gpall$Total4 <- out4.gpall$Sus4 + out4.gpall$Exp4 + out4.gpall$Inf4 + out4.gpall$Rec4
+out4.gpall$TotalV <- out4.gpall$SusV + out4.gpall$ExpV + out4.gpall$InfV
+View(out4.gpall)
