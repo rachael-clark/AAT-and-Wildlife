@@ -152,7 +152,7 @@ parms2 <- c(
   c= 0.025)      #probability of infected bloodmeal giving rise to infection in fly
 times2 <- seq(0, 1000, 1)
 
-out2 <- as.data.frame(ode(init, times, seir, parms))
+out2 <- as.data.frame(ode(init2, times2, seir2, parms2))
 
 head(out2)
 tail(out2)
