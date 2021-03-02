@@ -233,7 +233,7 @@ tail(out4.gpall)
 min(out4.gpall)
 
 
-par(mfrow=c(2,3)) # To include 3 plots on the one row
+par(mfrow=c(1,1)) # To include 3 plots on the one row
 
 # SPK: Have added a third plot to show the second host species. Have also tweaked
 #      the colours slightly to be consistent and I think clear what is what for 
