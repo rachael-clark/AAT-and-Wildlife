@@ -208,7 +208,7 @@ legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
 min(out2)
 max(out2)  
 
-out2$Total1 <- out$Sus1 + out$Exp1 + out$Inf1 + out$Rec1
-out2$Total2 <- out$Sus2 + out$Exp2 + out$Inf2 + out$Rec2
-out2$TotalV <- out$SusV + out$ExpV + out$InfV
+out2$Total1 <- out2$Sus1 + out2$Exp1 + out2$Inf1 + ou2t$Rec1
+out2$Total2 <- out2$Sus2 + out2$Exp2 + out2$Inf2 + out2$Rec2
+out2$TotalV <- out2$SusV + out2$ExpV + out2$InfV
 View(out2)
