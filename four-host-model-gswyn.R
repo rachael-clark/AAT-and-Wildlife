@@ -1,7 +1,8 @@
 #Load package 
 library(deSolve)
 
-#SEIR Model for Two Vertebrate Hosts and One Vector Model 
+#SEIR Model for Four Vertebrate species (three wild and one domestic)
+#and G. swynnertoni tsetse species as the vector
 seir4.gswyn <- function(times, init, parameters) {
   
   Sh1 <- init[1]               #susceptible host species 1
