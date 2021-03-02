@@ -33,5 +33,9 @@ Two host model:
 2. ~~Please review two-host model with added calculations for proportion of bloodmeals and weighted average of wildlife ~~
 
 
+**03-MAR-2021**
+***SPK for RC***
+1. Define in the comments at the top of each of your models more exactly what each model is doing, specifically how the 4 species models differ from each other. 
+
 
 
