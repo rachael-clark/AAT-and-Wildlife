@@ -21,16 +21,16 @@ Two host model:
 
 **08-FEB-2021** - 
 ***FOA SPK***
-1. Please review two-host-model that has been uploaded. 
+1. ~~Please review two-host-model that has been uploaded. ~~
 
 **15-FEB-2021** -
 ***FOA SPK***
-1. Please review new four-host-model file that has been uploaded 
+1. ~~Please review new four-host-model file that has been uploaded ~~
 
 **23-FEB-2021** - 
 ***FAO SPK***
-1. Please review four-host model with added calculations for the proportion of bloodmeals in different host species
-2. Please review two-host model with added calculations for proportion of bloodmeals and weighted average of wildlife 
+1. ~~Please review four-host model with added calculations for the proportion of bloodmeals in different host species~~
+2. ~~Please review two-host model with added calculations for proportion of bloodmeals and weighted average of wildlife ~~
 
 
 
