@@ -72,21 +72,46 @@ seir2 <- function(times, init, parameters) {
   })
 }
 
-init2 <- c(Sus1 = 300,    #susceptible host 1
-          Exp1 = 0,      #exposed host 1
-          Inf1 = 0,      #infected host 1
-          Rec1 = 0,      #recovered host 1
-          SusV=5000,     #susceptible tsetse vector
-          ExpV=0,        #exposed tsetse vector 
-          InfV=1,        #infected tsetse vector
-          Sus2=300,      #susceptible host 2
-          Exp2=0,        #exposed host 2
-          Inf2=0,        #infected host 2
-          Rec2=0)        #recovered host 2.
+#To calculate host population sizes, 
+#wildlife density from Auty et al,2016 are used for the three main wildlife hosts:
+#buffalo (7.78 animals per km2)giraffe (4.07 animals per km2), elephant (2.4 animals per km2)
+#cattle density from Lord et al, 2020 are used for cattle (30 animals per km2)
 
-# SPK: Have reorganised this to be more aestetically pleasing and easy to read. 
-#      You should go through and add labels to each as you have elsewhere for 
-#      clarity.
+#From Auty etl al, 2016, cattle graze an area of 0-22km in the dry season (mean 3.47, median 2.5)
+#this is used as a diameter to then calculate the area in which the cattle travel:
+
+cat.graz.dis <- 3.47
+area <- pi * (cat.graz.dis/2)^2 #kilometres squared
+cat.pop <- 30   #average number of cattle per km2
+buf.pop <- 7.78 #average number of buffalo per km2
+gir.pop <- 4.07 #average number of giraffes per km2
+ele.pop <- 2.4  #average number of elephants per km2
+
+
+cat.dens <- cat.pop * area
+buf.dens <- buf.pop * area
+gir.dens <- gir.pop * area
+ele.dens <- ele.pop * area
+
+cat.adj.dens <- round(cat.dens, digits=0)
+buf.adj.dens <- round(buf.dens,digits=0) 
+gir.adj.dens <- round(gir.dens,digits=0) 
+ele.adj.dens <- round(ele.dens,digits=0) 
+
+wildlife.dens <- buf.adj.dens + gir.adj.dens + ele.adj.dens
+
+init2 <- c(Sus1 = cat.adj.dens,    #susceptible host 1
+          Exp1 = 0,                #exposed host 1
+          Inf1 = 0,                #infected host 1
+          Rec1 = 0,                #recovered host 1
+          SusV=5000,               #susceptible tsetse vector
+          ExpV=0,                  #exposed tsetse vector 
+          InfV=1,                  #infected tsetse vector
+          Sus2= wildlife.dens,      #susceptible host 2
+          Exp2=0,                  #exposed host 2
+          Inf2=0,                  #infected host 2
+          Rec2=0)                  #recovered host 2.
+
 
 #To calculate the proportion of bloodmeals from different wildlife host,
 #takem from Auty et al, 2016, the three main hosts of tsetse bloodmeals
@@ -178,15 +203,8 @@ plot(out2$Sus1 ~ out2$time, type='l', col='darkgreen',
 lines(out2$Exp1 ~ out2$time, col='orange', lwd = 2)
 lines(out2$Inf1 ~ out2$time, col= 'red', lwd = 2)
 lines(out2$Rec1 ~ out2$time, col='blue', lwd = 2)
-legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
-       col=c("darkgreen", "orange","red","blue"), lty=1, cex=0.8)
-
-
-# plot(out$`1` ~out$time, type='l', col='darkgreen', 
-#      xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
-# lines(out$`2`~out$time, col='orange', lwd = 2)
-# lines(out$`3`~out$time, col= 'red', lwd = 2)
-# lines(out$'4'~out$time, col='blue', lwd = 2)
+#legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
+       #col=c("darkgreen", "orange","red","blue"), lty=1, cex=0.8)
 
 # Host 2
 plot(out2$`Sus2` ~out2$time, type='l', col='darkgreen', 
@@ -194,16 +212,16 @@ plot(out2$`Sus2` ~out2$time, type='l', col='darkgreen',
 lines(out2$`Exp2`~out2$time, col='orange', lwd = 2)
 lines(out2$`Inf2`~out2$time, col= 'red', lwd = 2)
 lines(out2$'Rec2'~out2$time, col='blue', lwd = 2)
-legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
-       col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
+#legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
+       #col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 
 # Vector
 plot(out2$`SusV` ~out2$time, type='l', col='darkgreen', 
      xlab= 'time', ylab='N', ylim = c(0,5000), lwd = 2)
 lines(out2$'ExpV'~out2$time, col='orange', lwd = 2)
 lines(out2$'InfV'~out2$time, col='red', lwd = 2)
-legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
-       col=c("darkgreen", "orange","red"), lty=1, cex=0.8)
+#legend(500, 5000, legend=c("SusV", "ExpV", "InfV"),
+       #col=c("darkgreen", "orange","red"), lty=1, cex=0.8)
 
 min(out2)
 max(out2)  
@@ -212,3 +230,4 @@ out2$Total1 <- out2$Sus1 + out2$Exp1 + out2$Inf1 + out2$Rec1
 out2$Total2 <- out2$Sus2 + out2$Exp2 + out2$Inf2 + out2$Rec2
 out2$TotalV <- out2$SusV + out2$ExpV + out2$InfV
 View(out2)
+
