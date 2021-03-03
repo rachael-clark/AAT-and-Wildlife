@@ -118,22 +118,50 @@ seir4.gswyn <- function(times, init, parameters) {
   })
 }
 
-init4.gswyn <- c(Sus1 = 300,    #susceptible host 1
+#To calculate host population sizes, 
+#wildlife density from Auty et al,2016 are used for the three main wildlife hosts:
+#buffalo (7.78 animals per km2)giraffe (4.07 animals per km2), elephant (2.4 animals per km2)
+#cattle density from Lord et al, 2020 are used for cattle (30 animals per km2)
+
+#From Auty etl al, 2016, cattle graze an area of 0-22km in the dry season (mean 3.47, median 2.5)
+#this is used as a diameter to then calculate the area in which the cattle travel:
+
+cat.graz.dis <- 3.47
+area <- pi * (cat.graz.dis/2)^2 #kilometres squared
+cat.pop <- 30   #average number of cattle per km2
+buf.pop <- 7.78 #average number of buffalo per km2
+gir.pop <- 4.07 #average number of giraffes per km2
+ele.pop <- 2.4  #average number of elephants per km2
+
+
+cat.dens <- cat.pop * area
+buf.dens <- buf.pop * area
+gir.dens <- gir.pop * area
+ele.dens <- ele.pop * area
+
+cat.adj.dens <- round(cat.dens, digits=0)
+buf.adj.dens <- round(buf.dens,digits=0) 
+gir.adj.dens <- round(gir.dens,digits=0) 
+ele.adj.dens <- round(ele.dens,digits=0) 
+
+wildlife.dens <- buf.adj.dens + gir.adj.dens + ele.adj.dens
+
+init4.gswyn <- c(Sus1 = cat.adj.dens,    #susceptible host 1
            Exp1 = 0,      #exposed host 1
            Inf1 = 0,      #infected host 1
            Rec1 = 0,      #recovered host 1
            SusV=5000,     #susceptible tsetse vector
            ExpV=0,        #exposed tsetse vector 
            InfV=1,        #infected tsetse vector
-           Sus2=300,      #susceptible host 2
+           Sus2=buf.adj.dens,      #susceptible host 2
            Exp2=0,        #exposed host 2
            Inf2=0,        #infected host 2
            Rec2=0,        #recovered host 2.
-           Sus3=300,      #susceptible host 3
+           Sus3=gir.adj.dens,      #susceptible host 3
            Exp3=0,        #exposed host 3
            Inf3=0,        #infected host 3
            Rec3=0,        #recovered host 3
-           Sus4=300,        #susceptible host 4
+           Sus4=ele.adj.dens,        #susceptible host 4
            Exp4=0,        #exposed host 4
            Inf4=0,        #infected host 4
            Rec4=0)        #recovered host 4
@@ -247,7 +275,7 @@ par(mfrow=c(2,3)) # To include 3 plots on the one row
 
 # Host 1
 plot(out4.gswyn$Sus1 ~ out4.gswyn$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+     xlab= 'time', ylab='N', lwd = 2)
 lines(out4.gswyn$Exp1 ~ out4.gswyn$time, col='orange', lwd = 2)
 lines(out4.gswyn$Inf1 ~ out4.gswyn$time, col= 'red', lwd = 2)
 lines(out4.gswyn$Rec1 ~ out4.gswyn$time, col='blue', lwd = 2)
@@ -263,7 +291,7 @@ legend(500, 300, legend=c("Sus1", "Exp1", "Inf1", "Rec1"),
 
 # Host 2
 plot(out4.gswyn$`Sus2` ~out4.gswyn$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+     xlab= 'time', ylab='N', lwd = 2)
 lines(out4.gswyn$`Exp2`~out4.gswyn$time, col='orange', lwd = 2)
 lines(out4.gswyn$`Inf2`~out4.gswyn$time, col= 'red', lwd = 2)
 lines(out4.gswyn$'Rec2'~out4.gswyn$time, col='blue', lwd = 2)
@@ -271,7 +299,7 @@ legend(500, 300, legend=c("Sus2", "Exp2", "Inf2", "Rec2"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 3
 plot(out4.gswyn$`Sus3` ~out4.gswyn$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+     xlab= 'time', ylab='N', lwd = 2)
 lines(out4.gswyn$`Exp3`~out4.gswyn$time, col='orange', lwd = 2)
 lines(out4.gswyn$`Inf3`~out4.gswyn$time, col= 'red', lwd = 2)
 lines(out4.gswyn$'Rec3'~out4.gswyn$time, col='blue', lwd = 2)
@@ -279,7 +307,7 @@ legend(500, 300, legend=c("Sus3", "Exp3", "Inf3", "Rec3"),
        col=c("darkgreen", "orange","red", "blue"), lty=1, cex=0.8)
 #Host 4
 plot(out4.gswyn$`Sus4` ~out4.gswyn$time, type='l', col='darkgreen', 
-     xlab= 'time', ylab='N', ylim = c(0,300), lwd = 2)
+     xlab= 'time', ylab='N', lwd = 2)
 lines(out4.gswyn$`Exp4`~out4.gswyn$time, col='orange', lwd = 2)
 lines(out4.gswyn$`Inf4`~out4.gswyn$time, col= 'red', lwd = 2)
 lines(out4.gswyn$'Rec4'~out4.gswyn$time, col='blue', lwd = 2)
