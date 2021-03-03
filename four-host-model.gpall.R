@@ -119,22 +119,42 @@ seir4.gpall <- function(times, init, parameters) {
   })
 }
 
-init4.gpall <- c(Sus1 = 300,    #susceptible host 1
+cat.graz.dis <- 3.47
+area <- pi * (cat.graz.dis/2)^2 #kilometres squared
+cat.pop <- 30   #average number of cattle per km2
+buf.pop <- 7.78 #average number of buffalo per km2
+gir.pop <- 4.07 #average number of giraffes per km2
+ele.pop <- 2.4  #average number of elephants per km2
+
+
+cat.dens <- cat.pop * area
+buf.dens <- buf.pop * area
+gir.dens <- gir.pop * area
+ele.dens <- ele.pop * area
+
+cat.adj.dens <- round(cat.dens, digits=0)
+buf.adj.dens <- round(buf.dens,digits=0) 
+gir.adj.dens <- round(gir.dens,digits=0) 
+ele.adj.dens <- round(ele.dens,digits=0) 
+
+wildlife.dens <- buf.adj.dens + gir.adj.dens + ele.adj.dens
+
+init4.gpall <- c(Sus1 = cat.adj.dens,    #susceptible host 1
           Exp1 = 0,      #exposed host 1
           Inf1 = 0,      #infected host 1
           Rec1 = 0,      #recovered host 1
           SusV=5000,     #susceptible tsetse vector
           ExpV=0,        #exposed tsetse vector 
           InfV=1,        #infected tsetse vector
-          Sus2=300,      #susceptible host 2
+          Sus2=buf.adj.dens,      #susceptible host 2
           Exp2=0,        #exposed host 2
           Inf2=0,        #infected host 2
           Rec2=0,        #recovered host 2.
-          Sus3=300,      #susceptible host 3
+          Sus3=gir.adj.dens,      #susceptible host 3
           Exp3=0,        #exposed host 3
           Inf3=0,        #infected host 3
           Rec3=0,        #recovered host 3
-          Sus4=300,        #susceptible host 4
+          Sus4=ele.adj.dens,        #susceptible host 4
           Exp4=0,        #exposed host 4
           Inf4=0,        #infected host 4
           Rec4=0)        #recovered host 4
