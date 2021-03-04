@@ -49,3 +49,37 @@ write.csv(out30,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife30.csv")
 write.csv(out50,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife50.csv")
 write.csv(out70,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife70.csv")
 write.csv(out90,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife90.csv")
+
+#Comparison of Infection of Cattle with Increasing Wildlife Populations
+par(mfrow=c(1,1))
+plot(outpop0$Inf1 ~ seq(1,1001,1),type='l',col='darkgreen',lwd=3,ylim=c(0,300),
+     ylab="Infected Cattle",xlab="Time")
+lines(outpop10$Inf1 ~ seq(1,1001,1), lwd=3, col='blue')
+lines(outpop20$Inf1~ seq(1,1001,1), lwd=3, col='red')
+lines(outpop30$Inf1~ seq(1,1001,1), lwd=3, col='purple')
+lines(outpop30$Inf1~ seq(1,1001,1), lwd=3, col='orange')
+lines(outpop40$Inf1~ seq(1,1001,1), lwd=3, col='pink')
+lines(outpop50$Inf1~ seq(1,1001,1), lwd=3, col='brown')
+lines(outpop60$Inf1~ seq(1,1001,1), lwd=3, col='yellow')
+lines(outpop70$Inf1~ seq(1,1001,1), lwd=3, col='lightgreen')
+lines(outpop80$Inf1~ seq(1,1001,1), lwd=3, col='lightblue')
+lines(outpop90$Inf1~ seq(1,1001,1), lwd=3, col='darkblue')
+lines(outpop100$Inf1~ seq(1,1001,1), lwd=3, col='black')
+legend('topright', legend = c("0% Increase", "10% Increase","20% Increase" , "30% Increase", "40% Increase",
+                              "50% Increase","60% Increase", "70% Increase","80% Increase",
+                               "90% Increase","100% Increase"),
+       col=c("darkgreen","blue","red","purple","orange","pink",
+             "brown", "yellow","lightgreen","lightblue","darkblue","black"),
+       lty=1, cex=0.8, lwd=3)
+
+write.csv(outpop0,"~/University/4th Year/AAT-and-Wildlife/outputs/Population0.csv")
+write.csv(outpop10,"~/University/4th Year/AAT-and-Wildlife/outputs/Population10.csv")
+write.csv(outpop20,"~/University/4th Year/AAT-and-Wildlife/outputs/Population20.csv")
+write.csv(outpop30,"~/University/4th Year/AAT-and-Wildlife/outputs/Population30.csv")
+write.csv(outpop40,"~/University/4th Year/AAT-and-Wildlife/outputs/Population40.csv")
+write.csv(outpop50,"~/University/4th Year/AAT-and-Wildlife/outputs/Population50.csv")
+write.csv(outpop60,"~/University/4th Year/AAT-and-Wildlife/outputs/Population60.csv")
+write.csv(outpop70,"~/University/4th Year/AAT-and-Wildlife/outputs/Population70.csv")
+write.csv(outpop80,"~/University/4th Year/AAT-and-Wildlife/outputs/Population80.csv")
+write.csv(outpop90,"~/University/4th Year/AAT-and-Wildlife/outputs/Population90.csv")
+write.csv(outpop100,"~/University/4th Year/AAT-and-Wildlife/outputs/Population100.csv")
