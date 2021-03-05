@@ -80,7 +80,7 @@ seir2 <- function(times, init, parameters) {
 #From Auty etl al, 2016, cattle graze an area of 0-22km in the dry season (mean 3.47, median 2.5)
 #this is used as a diameter to then calculate the area in which the cattle travel:
 
-cat.graz.dis <- 3.47
+cat.graz.dis <- 3.47 #mean cattle grazing distance (km) away from farm during dry season
 area <- pi * (cat.graz.dis/2)^2 #kilometres squared
 cat.pop <- 30   #average number of cattle per km2
 buf.pop <- 7.78 #average number of buffalo per km2
