@@ -35,13 +35,13 @@ Two host model:
 
 **03-MAR-2021**
 ***SPK for RC***
-1. Define in the comments at the top of each of your models more exactly what each model is doing, specifically how the 4 species models differ from each other. 
+1. ~~Define in the comments at the top of each of your models more exactly what each model is doing, specifically how the 4 species models differ from each other. ~~
 
 
 **05-MAR-2021**
 ***SPK for RC***
-1. Re-run first two projects (tsetse sp. comparison & wildlife population) to check for the sensitivity to the proportion of wildlife tsetse (you've done 0.5, check 0.1 & 0.9).
-2. Plot both these projects as 1x3 graphs (keep the y scale constant).
+1. ~~Re-run first two projects (tsetse sp. comparison & wildlife population) to check for the sensitivity to the proportion of wildlife tsetse (you've done 0.5, check 0.1 & 0.9).~~
+2. ~~Plot both these projects as 1x3 graphs (keep the y scale constant).~~
 3. Once you have the results, decide on the order of presentation (after 2vs4 sp model, I think proportion of feeding on wildlife...).
 4. Interpret the results and produce some biological insight into why they may be as they are. 
 
