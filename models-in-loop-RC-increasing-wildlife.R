@@ -11,9 +11,9 @@ upper <- 2.0
 by <- 0.1
 range <- seq(lower, upper, by)
 length(range)
-mat10 <- matrix(1:(1001*(length(range)+1)), ncol = length(range)+1)
-mat10[,] <- NA
-mat10[,length(range)+1] <- seq(1,1001,1)
+mat90 <- matrix(1:(1001*(length(range)+1)), ncol = length(range)+1)
+mat90[,] <- NA
+mat90[,length(range)+1] <- seq(1,1001,1)
 
 for (i in 1:length(range)){
   #To calculate host population sizes, 
@@ -63,7 +63,7 @@ for (i in 1:length(range)){
   #At the park boundary we assume that 50% of bloodmeals will be from
   #wildlife and 50% from livestock and humans
   
-  wildlife.prop <- 0.1
+  wildlife.prop <- 0.9
   buf <- 0.57
   gir <- 0.2
   ele <- 0.11
@@ -121,34 +121,48 @@ for (i in 1:length(range)){
     c= 0.025)      #probability of infected bloodmeal giving rise to infection in fly
   times2 <- seq(0, 1000, 1)
   
-  out210 <- as.data.frame(ode(init2, times2, seir2, parms2))
+  out290 <- as.data.frame(ode(init2, times2, seir2, parms2))
   
-  mat10[,i] <- out210[,4]
+  mat90[,i] <- out290[,4]
 }
 
 par(mfrow=c(1,3))
 
 #library(randomcoloR)
 
-cols <- c("black","red","green", "purple", "orange", "blue", "brown", "darkred", "darkgreen")
+cols <- c("black","red","green", "purple", "orange", "blue", "brown", "darkred", "darkgreen","pink", "yellow")
 col = cols[j]
-plot(mat50[,1] ~ mat50[,length(range)+1], ylim = c(0,190), type = 'l',main="50% Wildlife",
-     xlab="Time",ylab="Infection in Cattle")
-for (j in 2:length(range)){
-  lines(mat50[,j] ~ mat50[,length(range)+1], col = cols[j])
-}
 
-plot(mat10[,1] ~ mat10[,length(range)+1], ylim = c(0,190), type = 'l',main="10% Wildlife",
-     xlab="Time",ylab="Infection in Cattle")
+
+plot(mat10[,1] ~ mat10[,length(range)+1], ylim = c(0,200), type = 'l',main="10% Wildlife Proportion",
+     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
 for (j in 2:length(range)){
   lines(mat10[,j] ~ mat10[,length(range)+1], col = cols[j])
 }
+axis(1)
+axis(2)
+legend('bottomright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
+                            "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
 
-plot(mat90[,1] ~ mat90[,length(range)+1], ylim = c(0,190), type = 'l',main="90% Wildlife",
-     xlab="Time",ylab="Infection in Cattle")
+plot(mat50[,1] ~ mat50[,length(range)+1], ylim = c(0,200), type = 'l',main="50% Wildlife Proportion",
+     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
+for (j in 2:length(range)){
+  lines(mat50[,j] ~ mat50[,length(range)+1], col = cols[j])
+}
+axis(1)
+axis(2)
+legend('bottomright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
+                            "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
+
+plot(mat90[,1] ~ mat90[,length(range)+1], ylim = c(0,200), type = 'l',main="90% Wildlife Proportion",
+     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
 for (j in 2:length(range)){
   lines(mat90[,j] ~ mat90[,length(range)+1], col = cols[j])
 }
-write.csv(mat10,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_10.csv")
-write.csv(mat50,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_50.csv")
-write.csv(mat90,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_90.csv")
+axis(1)
+axis(2)
+legend('topright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
+                          "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
+#write.csv(mat10,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_10.csv")
+#write.csv(mat50,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_50.csv")
+#write.csv(mat90,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_90.csv")
