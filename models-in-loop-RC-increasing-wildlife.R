@@ -11,9 +11,9 @@ upper <- 2.0
 by <- 0.1
 range <- seq(lower, upper, by)
 length(range)
-mat90 <- matrix(1:(1001*(length(range)+1)), ncol = length(range)+1)
-mat90[,] <- NA
-mat90[,length(range)+1] <- seq(1,1001,1)
+mat50 <- matrix(1:(1001*(length(range)+1)), ncol = length(range)+1)
+mat50[,] <- NA
+mat50[,length(range)+1] <- seq(1,1001,1)
 
 for (i in 1:length(range)){
   #To calculate host population sizes, 
@@ -63,7 +63,7 @@ for (i in 1:length(range)){
   #At the park boundary we assume that 50% of bloodmeals will be from
   #wildlife and 50% from livestock and humans
   
-  wildlife.prop <- 0.9
+  wildlife.prop <- 0.5
   buf <- 0.57
   gir <- 0.2
   ele <- 0.11
@@ -123,46 +123,52 @@ for (i in 1:length(range)){
   
   out290 <- as.data.frame(ode(init2, times2, seir2, parms2))
   
-  mat90[,i] <- out290[,4]
+  mat50[,i] <- out290[,4]
 }
 
 par(mfrow=c(1,3))
 
 #library(randomcoloR)
 
-cols <- c("black","red","green", "purple", "orange", "blue", "brown", "darkred", "darkgreen","pink", "yellow")
+cols <- c("black","red","green", "purple", "orange", "blue", "brown", "darkred", "darkgreen","pink", "darkblue")
 col = cols[j]
 
 
 plot(mat10[,1] ~ mat10[,length(range)+1], ylim = c(0,200), type = 'l',main="10% Wildlife Proportion",
-     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
+     xlab="",ylab="",axes=FALSE)
 for (j in 2:length(range)){
   lines(mat10[,j] ~ mat10[,length(range)+1], col = cols[j])
 }
-axis(1)
-axis(2)
-legend('bottomright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
-                            "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
+axis(1,las=1, font=2, cex.axis = 1.1, lwd = 2)
+axis(2,las=2, font=2, cex.axis=1.1, lwd = 2)
+mtext(side=1, line=2, "Time", col="black", font=2,cex=1)
+mtext(side=2, line=3, "Difference in Infected Cattle", col="black", font=2, cex=1)
+legend(610,110, legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
+                            "90%","100%"), lty=1, cex=0.8, col=cols)
 
 plot(mat50[,1] ~ mat50[,length(range)+1], ylim = c(0,200), type = 'l',main="50% Wildlife Proportion",
-     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
+     xlab="",ylab="",axes=FALSE)
 for (j in 2:length(range)){
   lines(mat50[,j] ~ mat50[,length(range)+1], col = cols[j])
 }
-axis(1)
-axis(2)
-legend('bottomright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
-                            "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
+axis(1,las=1, font=2, cex.axis = 1.1, lwd = 2)
+axis(2,las=2, font=2, cex.axis=1.1, lwd = 2)
+mtext(side=1, line=2, "Time", col="black", font=2,cex=1)
+mtext(side=2, line=3, "Difference in Infected Cattle", col="black", font=2, cex=1)
+legend(610,110, legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
+                            "90%","100%"), lty=1, cex=0.8, col=cols)
 
 plot(mat90[,1] ~ mat90[,length(range)+1], ylim = c(0,200), type = 'l',main="90% Wildlife Proportion",
-     xlab="Time",ylab="Infection in Cattle",axes=FALSE)
+     xlab="",ylab="",axes=FALSE)
 for (j in 2:length(range)){
   lines(mat90[,j] ~ mat90[,length(range)+1], col = cols[j])
 }
-axis(1)
-axis(2)
+axis(1,las=1, font=2, cex.axis = 1.1, lwd = 2)
+axis(2,las=2, font=2, cex.axis=1.1, lwd = 2)
+mtext(side=1, line=2, "Time", col="black", font=2,cex=1)
+mtext(side=2, line=3, "Difference in Infected Cattle", col="black", font=2, cex=1)
 legend('topright', legend=c("0%","10%", "20%", "30%","40%","50%","60%","70%", "80%",
-                          "90%","100%"), lty=1, cex=0.8, col=cols,box.lty=0)
+                          "90%","100%"), lty=1, cex=0.8, col=cols)
 #write.csv(mat10,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_10.csv")
 #write.csv(mat50,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_50.csv")
 #write.csv(mat90,"~/University/4th Year/AAT-and-Wildlife/outputs/Wildlife Populations_90.csv")
