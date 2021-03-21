@@ -195,6 +195,7 @@ d <- 4
 
 #The probability of infected fly bite giving rise to infection in host (B)
 x <- 
+b1 <- 0.46
 b2 <- 0.46 *(1)
 b3 <- 0.46 * (1-x)
 b4 <- 0.46 * (1+x)
@@ -208,7 +209,7 @@ parms4.gpall <- c(
   gamma1=0.01,  #recovery rate of host 1
   a1=cat.adj.gpall/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
-  b1=0.46,      #probability of infected fly bite giving rise to infection in host 1
+  b1= b1,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
   
   # host 2 = buffalo
