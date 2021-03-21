@@ -193,6 +193,12 @@ ifelse(hum.adj.gpall + cat.adj.gpall == domestic.prop,"TRUE", "FALSE")
 #are divided by duration of feeding cycles in tsetse = d
 d <- 4
 
+#The probability of infected fly bite giving rise to infection in host (B)
+x <- 
+b2 <- 0.46 *(1)
+b3 <- 0.46 * (1-x)
+b4 <- 0.46 * (1+x)
+
 parms4.gpall <- c(
   # host 1 = cattle
   mu1=0,        #birth rate of host 1
@@ -214,14 +220,14 @@ parms4.gpall <- c(
   gamma2=0.0042,   #recovery rate in host 2
   a2=buf.adj.gpall/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 2
-  b2=0.46,       #probability of infected fly bite giving rise to infection in host 2
+  b2= b2,       #probability of infected fly bite giving rise to infection in host 2
   
   # host 3 = giraffe
   mu4 = 0,       #birth rate of host 3
   upsilon3= 0.01,#rate of waning immunity in host 3
   a3= gir.adj.gpall/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 3
-  b3=0.46,       #probability of infected fly bite giving rise to infection in host 3
+  b3= b3,       #probability of infected fly bite giving rise to infection in host 3
   lambda6=0,     #natural death rate of host 3
   sigma4=0.067,   #rate of infected to infectious in host 3
   lambda7=0,     #death rate due to infection in host 3
@@ -232,7 +238,7 @@ parms4.gpall <- c(
   upsilon4= 0.01,#rate of waning immunity in host 4
   a4= ele.adj.gpall/d,     #proportion of tsetse bloodmeals/duration of feeding cycles in fly
                  #for host 4
-  b4=0.46,       #probability of infected fly bite giving rise to infection in host 4
+  b4= b4,       #probability of infected fly bite giving rise to infection in host 4
   lambda8=0,     #natural death rate of host 4
   sigma5=0.067,   #rate of infected to infectious in host 4
   lambda9=0,     #death rate due to infection in host 4
