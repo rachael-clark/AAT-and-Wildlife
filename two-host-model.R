@@ -181,7 +181,7 @@ parms2 <- c(
   upsilon2=0.01, #rate of waning immunity in host 2
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.01,   #recovery rate in host 2
-  a2=wildlife.av/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+  a2=wildlife.prop/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
                          #for host 2
   b2= b.wildlife.av.gpall, #probability of infected fly bite giving rise to infection in host 2
   
