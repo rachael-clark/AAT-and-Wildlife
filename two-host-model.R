@@ -124,9 +124,9 @@ buf <- 0.57
 gir <- 0.2
 ele <- 0.11
 
-buf.adj <- buf / (buf + gir + ele) * wildlife.prop
-gir.adj <- gir/(buf + gir + ele) * wildlife.prop
-ele.adj <- ele/(buf + gir + ele) * wildlife.prop
+buf.adj.prop <- buf / (buf + gir + ele) * wildlife.prop
+gir.adj.prop <- gir/(buf + gir + ele) * wildlife.prop
+ele.adj.prop <- ele/(buf + gir + ele) * wildlife.prop
 
 ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
 
@@ -140,11 +140,27 @@ cat.adj <- cat / (hum +cat) * domestic.prop
 ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
 
 #weighted averages of the three main wildlife species
-wildlife.av <- ((buf.adj*buf)+(gir.adj*gir)+(ele.adj*ele))/3
+wildlife.av <- ((buf.adj.prop*buf)+(gir.adj.prop*gir)+(ele.adj.prop*ele))/3
 
 #To calculate values for 'a' in the parameters, the above values
 #are divided by duration of feeding cycles in tsetse = d
 d <- 4
+
+##AVERAGING THE PARAMETERS FOR WILDLIFE: 
+buf.adj <- buf / (buf + gir + ele)
+gir.adj <- gir/(buf + gir + ele)
+ele.adj <- ele/(buf + gir + ele)
+
+
+#The probability of a fy bite giving rise to infection in host species: 
+x <- 
+b1 <- 0.46
+b2 <- 0.46 * 1
+b3 <- 0.46 * (1-x)
+b4 <- 0.46 * (1+x)
+
+#weighed average for b: 
+b.wildlife.av.gpall <- (buf.adj * b2) + (gir.adj * b3) + (ele.adj * b4)
 
 parms2 <- c(
   # host 1 = cattle
@@ -155,7 +171,7 @@ parms2 <- c(
   gamma1=0.01,  #recovery rate of host 1
   a1=cat.adj/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
   #for host 1
-  b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
+  b1=0.46,      #probability of infected fly bite giving rise to infection in host 1
   upsilon1=0.01,#rate of waning immunity in host 1
   
   # host 2 = wildlife
@@ -166,8 +182,8 @@ parms2 <- c(
   lambda5=0,     #death dye to infection in host 2
   gamma2=0.01,   #recovery rate in host 2
   a2=wildlife.av/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
-  #for host 2
-  b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
+                         #for host 2
+  b2= b.wildlife.av.gpall, #probability of infected fly bite giving rise to infection in host 2
   
   # vector
   mu2=     0.01,         #birth rate of vector
