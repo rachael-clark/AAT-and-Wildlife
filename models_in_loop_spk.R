@@ -68,9 +68,9 @@ for (i in 1:length(range)){
   gir <- 0.2
   ele <- 0.11
   
-  buf.adj <- buf / (buf + gir + ele) * wildlife.prop
-  gir.adj <- gir/(buf + gir + ele) * wildlife.prop
-  ele.adj <- ele/(buf + gir + ele) * wildlife.prop
+  #buf.adj <- buf / (buf + gir + ele) * wildlife.prop
+  #gir.adj <- gir/(buf + gir + ele) * wildlife.prop
+  #ele.adj <- ele/(buf + gir + ele) * wildlife.prop
   
   ifelse(buf.adj + gir.adj + ele.adj == wildlife.prop, "TRUE", "FALSE")
   
@@ -83,8 +83,21 @@ for (i in 1:length(range)){
   
   ifelse(hum.adj + cat.adj == domestic.prop,"TRUE", "FALSE")
   
-  #weighted averages of the three main wildlife species
-  wildlife.av <- ((buf.adj*buf)+(gir.adj*gir)+(ele.adj*ele))/3
+  ##AVERAGING THE PARAMETERS FOR WILDLIFE: 
+  buf.adj <- buf / (buf + gir + ele)
+  gir.adj <- gir/(buf + gir + ele)
+  ele.adj <- ele/(buf + gir + ele)
+  
+  
+  #The probability of a fy bite giving rise to infection in host species: 
+  x <- 0.5
+  b1 <- 0.46
+  b2 <- 0.46 * 1
+  b3 <- 0.46 * (1-x)
+  b4 <- 0.46 * (1+x)
+  
+  #weighed average for b: 
+  b.wildlife.av.gpall <- (buf.adj * b2) + (gir.adj * b3) + (ele.adj * b4)
   
   #To calculate values for 'a' in the parameters, the above values
   #are divided by duration of feeding cycles in tsetse = d
@@ -99,7 +112,7 @@ for (i in 1:length(range)){
     gamma1=0.01,  #recovery rate of host 1
     a1=cat.adj/d,     #portion of tsetse bloodmeals/duration of feeding cycles in fly
     #for host 1
-    b1=0.62,      #probability of infected fly bite giving rise to infection in host 1
+    b1=b1,      #probability of infected fly bite giving rise to infection in host 1
     upsilon1=0.01,#rate of waning immunity in host 1
     
     # host 2 = wildlife
@@ -109,9 +122,9 @@ for (i in 1:length(range)){
     upsilon2=0.01, #rate of waning immunity in host 2
     lambda5=0,     #death dye to infection in host 2
     gamma2=0.01,   #recovery rate in host 2
-    a2=wildlife.av/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
+    a2=wildlife.prop/d,      #portion of tsetse bloodmeals/duration of feeding cycles in fly
     #for host 2
-    b2=0.62,       #probability of infected fly bite giving rise to infection in host 2
+    b2= b.wildlife.av.gpall,       #probability of infected fly bite giving rise to infection in host 2
     
     # vector
     mu2=     0.01,         #birth rate of vector
@@ -128,14 +141,21 @@ for (i in 1:length(range)){
 
 par(mfrow=c(1,1))
 
-library(randomcoloR)
+#library(randomcoloR)
 
-cols <- c("black","red","green", "purple", "orange", "blue", "brown", "darkred", "darkgreen")
- # col = cols[j]
-plot(mat[,1] ~ mat[,length(range)+1], ylim = c(0,190), type = 'l')
+cols <- c("red","orange","green", "darkgreen", "blue", "darkblue", "purple", "deeppink", "brown")
+ col = cols[j]
+plot(mat[,1] ~ mat[,length(range)+1], ylim = c(0,200),xlim=c(0,800), type = 'l',axes=FALSE,
+     xlab="",ylab="",lwd=2)
 for (j in 2:length(range)){
-  lines(mat[,j] ~ mat[,length(range)+1], col = randomColor(1))
+  lines(mat[,j] ~ mat[,length(range)+1], col = cols[j],lwd=2)
 }
+legend('right', legend=c("10%","20%", "30%", "40%","50%","60%","70%", "80%",
+                         "90%"), lty=1, cex=0.8, col=cols,lwd=2)
+axis(1,las=1, font=2, cex.axis = 1.1, lwd = 2)
+axis(2,las=2, font=2, cex.axis=1.1, lwd = 2)
+mtext(side=1, line=2, "Time", col="black", font=2,cex=1)
+mtext(side=2, line=3, "Difference in Infected Cattle", col="black", font=2, cex=1)
 
 
 
